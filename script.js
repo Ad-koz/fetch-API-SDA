@@ -24,3 +24,20 @@ fetch("https://reqres.in/api/users?page=2")
     }
 });
 
+// Zadanie. Używając  strony reqres utworzyć uzytkownika.
+
+const addUser = {
+    name: "Jan",
+    surname: "Nowak",
+    job: "Software Engineer"
+}
+
+fetch("https://reqres.in/api/users", {
+    method: "POST",
+    headers: {
+        "Content-type": "application/json"
+    },
+    body: JSON.stringify(addUser)
+})
+.then((resp) => resp.json())
+.then((resp) => console.log(resp));
