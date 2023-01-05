@@ -41,3 +41,12 @@ fetch("https://reqres.in/api/users", {
 })
 .then((resp) => resp.json())
 .then((resp) => console.log(resp));
+
+//Zadanie. Korzystając ze strony reqres usuń użytkownika
+
+fetch("https://reqres.in/api/users/2", {
+    method: "DELETE"
+}).then((resp) => {
+    if(resp.status === 204) { console.log("User deleted");}
+    else {console.log("Error");}
+})
