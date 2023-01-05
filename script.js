@@ -50,3 +50,22 @@ fetch("https://reqres.in/api/users/2", {
     if(resp.status === 204) { console.log("User deleted");}
     else {console.log("Error");}
 })
+
+//Zadanie. Obsłuż niepoprawne logowanie użytkownika
+
+const loginData = {
+    "email": "eve.holt@reqres.in",
+    "password": "cityslicka"
+};
+fetch("https://reqres.in/api/login", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(loginData)
+}).then((resp) => {
+    if (resp.ok) {
+        console.log("login successful");
+    }
+    else {console.error("login error")}
+}).catch((error) => console.log(error))
