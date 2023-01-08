@@ -177,3 +177,11 @@ fetch("https://api.nbp.pl/api/exchangerates/rates/a/eur?format=json")
         console.log(`kwota do wypłaty: ${value} EUR`)
     }
 })
+//  Zadanie. Korzystając z API NBP znaleźć najwyższą cenę złota, która wystąpiła w przeciągu ostatniego miesiąca. Podać tę datę. 
+
+fetch("http://api.nbp.pl/api/cenyzlota/last/30/?format=json")
+.then((response) => response.json())
+.then((dane) => {
+    dane.sort((a, b) => a.cena - b.cena);
+    console.log(`Dnia: ${dane[0].data} Cena: ${dane[0].cena}`);
+  });
