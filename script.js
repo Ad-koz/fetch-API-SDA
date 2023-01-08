@@ -69,3 +69,62 @@ fetch("https://reqres.in/api/login", {
     }
     else {console.error("login error")}
 }).catch((error) => console.log(error))
+
+//Zadanie. Użytkownik ma się zarejestrować, zalogować, a na samym końcu ma się wyświetlić lista użytkowników. Wykonać to za pomocą klas.
+
+class ApiService {
+    constructor() {}
+        async get(url) {
+            const response = await fetch(url);
+            return await this.processResponse(response);
+        }
+        async post(url, data) {
+            return await this.sendData("POST", url, data);
+        }
+        async put(url, data) {
+            return await this.sendData("PUT", url, data);
+        }
+        async sendData(method, url, data) {
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+            return await this.processResponse(response);
+        }
+        async processResponse(response) {
+            if(response.ok) {
+                const dane = await response.json();
+                return dane;
+            } else {
+                console.error("Request error! Status:" + response.status);
+            }
+        }
+}
+  class UsersService {
+    constructor() {
+      this.baseUrl = "https://reqres.in/api/users";
+      this.apiService = new ApiService();
+    }
+  
+    async getUsers(page) {
+      const response = await this.apiService.get(
+        `${this.baseUrl}/users?page=${page}`
+      );
+      return response.data;
+    }
+  
+    async getUser(id) {
+      const response = await this.apiService.get(`${this.baseUrl}/users/${id}`);
+      return response.data;
+    }
+  
+    async createUser(user) {
+      return await this.apiService.post(`${this.baseUrl}/users`, user);
+    }
+  
+    async updateUser(user) {
+      return await this.apiService.put(`${this.baseUrl}/users`, user);
+    }
+  }
