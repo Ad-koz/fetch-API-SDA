@@ -86,6 +86,7 @@ class ApiService {
         }
         async sendData(method, url, data) {
             const response = await fetch(url, {
+                method: method,
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -104,7 +105,7 @@ class ApiService {
 }
   class UsersService {
     constructor() {
-      this.baseUrl = "https://reqres.in/api/users";
+      this.baseUrl = "https://reqres.in/api";
       this.apiService = new ApiService();
     }
   
@@ -128,3 +129,32 @@ class ApiService {
       return await this.apiService.put(`${this.baseUrl}/users`, user);
     }
   }
+
+
+const user5 = new UsersService();
+
+console.log(user5.getUser(5))
+
+// c.d. Stworzyć klasę do uwierzytelnienia użytkownika.
+
+class AuthService {
+    constructor() {
+        this.baseUrl = "https://reqres.in/api";
+        this.apiService = new ApiService();
+    }
+    async login(pass) {
+        return await this.apiService.post(`${this.baseUrl}/login`, pass);
+    }
+    async register(user) {
+        return await this.apiService.post(`${this.baseUrl}/register`, user);
+    }
+}
+
+const authService = new AuthService();
+
+authService
+.login({
+    email: "eve.holt@reqres.in",
+    password: "cityslicka"
+})
+.then((res) => console.log(res));
