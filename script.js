@@ -158,3 +158,22 @@ authService
     password: "cityslicka"
 })
 .then((res) => console.log(res));
+
+//Zadanie. Korzystając z http://api.nbp.pl/ napisać aplikację w której użytkownik może wymienić walutę. Dajemy mozliwosc wyboru jaka to ma byc konwersja: czy PLN na EUR.
+
+const chooseCurrency = prompt("Wpisz odpowiednio 1 lub 2: 1. EUR -> PLN, 2. PLN -> EUR");
+const amount = parseFloat(prompt("Wpisz kwotę"));
+
+fetch("https://api.nbp.pl/api/exchangerates/rates/a/eur?format=json")
+.then(response => response.json())
+.then((dane) => {
+    const exchangeRate = dane.rates[0].mid;
+    if(chooseCurrency === "1") {
+        value = exchangeRate*amount
+        console.log(`kwota do wypłaty: ${value} PLN`)
+    }
+    else if(chooseCurrency === "2") {
+        value = amount/exchangeRate
+        console.log(`kwota do wypłaty: ${value} EUR`)
+    }
+})
